@@ -29,3 +29,23 @@ source venv/bin/activate  # On Windows: venv\Scripts\activate
 Install required Python packages:
 
 pip install -r requirements.txt
+# 3. Obtain API Keys
+Sendinblue API Key:
+
+Log in to your Sendinblue account.
+
+Navigate to SMTP & API under the settings.
+
+Generate an API key and copy it.
+
+Google Sheets API Key:
+
+Go to the Google Cloud Console.
+
+Create a new project or use an existing one.
+
+Enable the Google Sheets API and Google Drive API.
+
+Create credentials for a service account and download the JSON key file.
+
+Save the JSON key file in the project directory
