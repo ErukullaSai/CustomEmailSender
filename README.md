@@ -20,3 +20,12 @@ Install pip for package management.
 A Sendinblue account (to obtain an API key).
 
 A Google Cloud account with access to the Google Sheets API.
+# 2. Install Dependencies
+Create and activate a virtual environment:
+python -m venv venv
+
+source venv/bin/activate  # On Windows: venv\Scripts\activate
+
+Install required Python packages:
+
+pip install -r requirements.txt
