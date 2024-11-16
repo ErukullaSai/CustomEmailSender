@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Email Scheduler Dashboard</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 20px auto;
+            background-color: white;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+
+        .email-stats {
+            display: flex;
+            justify-content: space-around;
+            margin-bottom: 30px;
+        }
+
+        .stat-box {
+            background-color: #f9f9f9;
+            padding: 20px;
+            text-align: center;
+            width: 22%;
+            border-radius: 8px;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .stat-box h2 {
+            margin: 10px 0;
+        }
+
+        .stat-box .count {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #007BFF;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 30px;
+        }
+
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: center;
+        }
+
+        th {
+            background-color: #007BFF;
+            color: white;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+        .status-sent {
+            color: green;
+        }
+
+        .status-failed {
+            color: red;
+        }
+
+        .status-pending {
+            color: orange;
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 30px;
+            font-size: 0.9rem;
+            color: #888;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Email Scheduler Dashboard</h1>
+
+        <div class="email-stats">
+            <div class="stat-box">
+                <h2>Total Emails Sent</h2>
+                <div class="count" id="total_sent">{{ total_sent }}</div>
+            </div>
+            <div class="stat-box">
+                <h2>Emails Pending</h2>
+                <div class="count" id="pending">{{ pending }}</div>
+            </div>
+            <div class="stat-box">
+                <h2>Emails Scheduled</h2>
+                <div class="count" id="scheduled">{{ scheduled }}</div>
+            </div>
+            <div class="stat-box">
+                <h2>Emails Failed</h2>
+                <div class="count" id="failed">{{ failed }}</div>
+            </div>
+        </div>
+
+        <table id="email_status_table">
+            <thead>
+                <tr>
+                    <th>Email</th>
+                    <th>Status</th>
+                    <th>Delivery</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for email in email_status %}
+                <tr>
+                    <td>{{ email.email }}</td>
+                    <td class="status-{{ email.status|lower }}">{{ email.status }}</td>
+                    <td>{{ email.delivery }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        
+        <div class="footer">
+            <p>&copy; 2024 Email Scheduler. All rights reserved.</p>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.min.js"></script>
+    <script>
+        const socket = io();
+
+        // Real-time updates for email status
+        socket.on('update_status', function(data) {
+            const table = document.getElementById("email_status_table").getElementsByTagName('tbody')[0];
+            const newRow = table.insertRow();
+
+            const emailCell = newRow.insertCell(0);
+            const statusCell = newRow.insertCell(1);
+            const deliveryCell = newRow.insertCell(2);
+
+            emailCell.textContent = data.email;
+            statusCell.textContent = data.status;
+            statusCell.classList.add('status-' + data.status.toLowerCase());
+            deliveryCell.textContent = data.delivery;
+        });
+
+        // Initial data load
+        socket.on('initial_data', function(data) {
+            const totalSent = document.getElementById("total_sent");
+            const pending = document.getElementById("pending");
+            const scheduled = document.getElementById("scheduled");
+            const failed = document.getElementById("failed");
+
+            totalSent.textContent = data.total_sent;
+            pending.textContent = data.pending;
+            scheduled.textContent = data.scheduled;
+            failed.textContent = data.failed;
+
+            const table = document.getElementById("email_status_table").getElementsByTagName('tbody')[0];
+            data.email_status.forEach(function(email) {
+                const newRow = table.insertRow();
+                const emailCell = newRow.insertCell(0);
+                const statusCell = newRow.insertCell(1);
+                const deliveryCell = newRow.insertCell(2);
+
+                emailCell.textContent = email.email;
+                statusCell.textContent = email.status;
+                statusCell.classList.add('status-' + email.status.toLowerCase());
+                deliveryCell.textContent = email.delivery;
+            });
+        });
+    </script>
+</body>
+</html>
