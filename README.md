@@ -49,3 +49,5 @@ Enable the Google Sheets API and Google Drive API.
 Create credentials for a service account and download the JSON key file.
 
 Save the JSON key file in the project directory
+# 4.Configuartion
+create .env file for storing secutity keys
