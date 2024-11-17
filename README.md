@@ -86,4 +86,7 @@ Failed emails.
 Throttle Rate: Specifies the number of emails to send per minute.
 
 Delays between batches ensure compliance with ESP limits.
+
+Video Link:
+
 https://github.com/user-attachments/assets/afaf80de-579b-4780-9545-8b09b118c674
