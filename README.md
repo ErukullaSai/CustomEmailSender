@@ -82,3 +82,7 @@ Failed emails.
 2.Emails are scheduled with throttling to control the send rate.
 
 3.Real-time analytics updates are sent to the dashboard using Socket.IO.
+# Email Throttling
+Throttle Rate: Specifies the number of emails to send per minute.
+
+Delays between batches ensure compliance with ESP limits.
