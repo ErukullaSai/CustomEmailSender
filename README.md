@@ -51,3 +51,5 @@ Create credentials for a service account and download the JSON key file.
 Save the JSON key file in the project directory
 # 4.Configuartion
 create .env file for storing secutity keys
+# Usage Instructions
+# 1. Configure Email Scheduling
