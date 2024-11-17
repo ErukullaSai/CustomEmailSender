@@ -64,3 +64,21 @@ open the application in http://127.0.0.1:5000 browser
 3.Delay (Minutes): The time delay before emails start sending.
 
 4.Throttle Rate: Maximum emails to send per minute.
+
+Click "Schedule Emails" to start the email scheduling process.
+# 2. Monitor Emails
+Navigate to the dashboard to view:
+
+Total emails sent.
+
+Pending emails.
+
+Emails scheduled.
+
+Failed emails.
+# How Email Scheduling Works
+1.The app fetches email details from the provided Google Sheet.
+
+2.Emails are scheduled with throttling to control the send rate.
+
+3.Real-time analytics updates are sent to the dashboard using Socket.IO.
