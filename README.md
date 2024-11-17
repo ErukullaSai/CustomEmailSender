@@ -53,3 +53,14 @@ Save the JSON key file in the project directory
 create .env file for storing secutity keys
 # Usage Instructions
 # 1. Configure Email Scheduling
+Start the application
+
+open the application in http://127.0.0.1:5000 browser
+# Input Form Fields:
+1.Spreadsheet ID: The unique ID of your Google Sheet (found in the URL).
+
+2.Sheet Name: The specific sheet name containing email data.
+
+3.Delay (Minutes): The time delay before emails start sending.
+
+4.Throttle Rate: Maximum emails to send per minute.
